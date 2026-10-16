@@ -6,12 +6,14 @@ The palette combines brown (`#35130A`), green (`#11C56E`), and blue (`#28498C`) 
 
 ## Run locally
 
-Use Node.js 22.12 or newer.
+Use Node.js 24 LTS, matching the deployment workflow.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
+
+Open **http://localhost:5173/personal_portfolio/**.
 
 ## Production build
 
@@ -20,7 +22,24 @@ npm run build
 npm run preview
 ```
 
-Deploy the generated `dist/` directory to a static host such as Vercel, Netlify, or GitHub Pages. The relative asset base supports hosting under a subdirectory. Navigation uses section anchors, so no server-side route rewrites are needed.
+Open **http://localhost:4173/personal_portfolio/** to check the production build.
+
+## Deploy to GitHub Pages
+
+The site is configured for **https://ulisesf04.github.io/personal_portfolio/**.
+
+1. In the repository’s [Settings → Pages](https://github.com/UlisesF04/personal_portfolio/settings/pages), set **Build and deployment → Source** to **GitHub Actions**.
+2. Push the prepared commit to `main`:
+
+   ```bash
+   git push origin main
+   ```
+
+3. In the repository’s **Actions** tab, watch **Deploy portfolio to GitHub Pages**. The site becomes available at the URL above after the deployment succeeds.
+
+The workflow in `.github/workflows/deploy.yml` runs on pushes to `main` and can also be started manually from the Actions tab. It installs the locked dependencies with `npm ci`, builds with Node.js 24, and publishes only `dist/` using the official GitHub Pages actions.
+
+Vite’s `base` is `/personal_portfolio/`, so scripts, styles, fonts, images, and the favicon load under the repository’s Pages path. Navigation uses section anchors, so no server-side route rewrites are needed. Build output and dependencies are excluded from Git.
 
 ## Update the content
 
